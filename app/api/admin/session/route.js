@@ -14,7 +14,7 @@ export async function POST(request) {
     if (!checkCredentials(input.email, input.password)) return NextResponse.json({ error: 'E-mail ou senha incorretos.' }, { status: 401 });
     attempts.count = 0;
     const response = NextResponse.json({ ok: true });
-    response.cookies.set(COOKIE_NAME, createSession(), { httpOnly: true, sameSite: 'strict', secure: new URL(request.url).protocol === 'https:', path: '/', maxAge: SESSION_AGE });
+    response.cookies.set(COOKIE_NAME, createSession(), { httpOnly: true, sameSite: 'strict', secure: process.env.RENDER === 'true' || new URL(request.url).protocol === 'https:', path: '/', maxAge: SESSION_AGE });
     return response;
   } catch { return NextResponse.json({ error: 'Não foi possível processar o acesso.' }, { status: 400 }); }
 }

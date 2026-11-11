@@ -1,8 +1,9 @@
 import sharp from 'sharp';
 import { mkdir, writeFile } from 'node:fs/promises';
-import path from 'node:path';
 import { randomUUID } from 'node:crypto';
+import path from 'node:path';
 import { authenticated, checkOrigin, readBody } from '../../../../lib/admin-auth';
+import { dataDirectory } from '../../../../lib/data-dir';
 
 export const runtime = 'nodejs';
 export async function POST(request) {
@@ -14,7 +15,7 @@ export async function POST(request) {
     const file = form.get('file');
     if (!(file instanceof File) || !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 8 * 1024 * 1024) return Response.json({ error: 'Envie JPG, PNG ou WebP de até 8 MB.' }, { status: 400 });
     const image = await sharp(Buffer.from(await file.arrayBuffer()), { limitInputPixels: 40000000, animated: false }).rotate().resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true }).webp({ quality: 88 }).toBuffer();
-    const directory = path.join(process.cwd(), 'data', 'uploads');
+    const directory = path.join(dataDirectory(), 'uploads');
     await mkdir(directory, { recursive: true });
     const name = `${randomUUID()}.webp`;
     await writeFile(path.join(directory, name), image);
