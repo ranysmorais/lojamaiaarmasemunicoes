@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Forja Paiol — Armas e Cutelaria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#E4E5E2;
+    --ink:#1C1F1A;
+    --olive:#4B5320;
+    --brass:#B08D3C;
+    --card:#F4F4F1;
+    --muted:color-mix(in srgb, var(--ink) 62%, var(--bg));
+    --line:color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--bg)}
+  body{font-family:"Geist",system-ui,sans-serif;color:var(--ink);line-height:1.5;font-size:15px}
+  h1,h2,h3,.cond{font-family:"Saira Condensed",sans-serif;text-transform:uppercase;letter-spacing:.02em;line-height:1}
+  button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  /* header */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:"Saira Condensed";font-weight:800;font-size:24px;text-transform:uppercase}
+  .logo-mark{width:30px;height:30px;border-radius:6px;background:var(--olive);display:grid;place-items:center;color:var(--card);font-size:16px}
+  .nav{display:none;gap:24px;font-size:14px;color:var(--muted)}
+  .nav a{color:inherit;text-decoration:none}
+  .nav a:hover{color:var(--ink)}
+  .cart-btn{display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--card);padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500}
+  .cart-count{background:var(--brass);color:var(--ink);min-width:22px;height:22px;border-radius:999px;display:grid;place-items:center;font-size:12px;font-weight:700}
+  @media(min-width:800px){.nav{display:flex}}
+
+  /* hero */
+  .hero{display:grid;gap:28px;padding:36px 0 48px}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--olive);font-weight:600}
+  .hero h1{font-size:clamp(48px,9vw,104px);font-weight:800;margin:12px 0 18px}
+  .hero h1 span{color:var(--olive)}
+  .hero p{max-width:440px;color:var(--muted);font-size:16px;text-wrap:pretty}
+  .hero-cta{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none}
+  .btn-primary{background:var(--olive);color:var(--card)}
+  .btn-primary:hover{background:color-mix(in srgb,var(--olive) 85%,var(--ink))}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink)}
+  .hero-img{border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:var(--card)}
+  .hero-img img{width:100%;height:100%;object-fit:cover}
+  @media(min-width:900px){.hero{grid-template-columns:1fr 1.15fr;align-items:center;padding:56px 0 72px}}
+
+  /* filters */
+  .shop-head{display:flex;flex-direction:column;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+  .shop-head h2{font-size:40px;font-weight:800}
+  .filters{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:500;color:var(--muted)}
+  .chip[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
+  @media(min-width:800px){.shop-head{flex-direction:row;align-items:end;justify-content:space-between}}
+
+  /* grid */
+  .grid{display:grid;gap:20px;padding:28px 0 72px;grid-template-columns:1fr}
+  @media(min-width:620px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:980px){.grid{grid-template-columns:repeat(3,1fr)}}
+  .card{background:var(--card);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;opacity:0;transform:translateY(12px);animation:rise .5s ease forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .card-img{position:relative;aspect-ratio:1/1;background:var(--bg)}
+  .card-img img{width:100%;height:100%;object-fit:cover}
+  .badge{position:absolute;top:12px;left:12px;background:var(--card);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:6px}
+  .badge.ctrl{background:var(--brass);color:var(--ink)}
+  .card-body{padding:18px;display:flex;flex-direction:column;gap:14px;flex:1}
+  .card-top{display:flex;justify-content:space-between;gap:12px;align-items:start}
+  .card h3{font-size:24px;font-weight:700}
+  .cat{font-size:12px;color:var(--muted);margin-top:4px}
+  .price{font-family:"Saira Condensed";font-weight:700;font-size:24px;white-space:nowrap}
+
+  /* signature: spec tag */
+  .spec{display:grid;grid-template-columns:repeat(3,1fr);border:1px dashed color-mix(in srgb,var(--ink) 30%,transparent);border-radius:8px;position:relative}
+  .spec::before{content:"";position:absolute;left:-6px;top:50%;width:10px;height:10px;border-radius:50%;background:var(--card);border:1px dashed color-mix(in srgb,var(--ink) 30%,transparent);transform:translateY(-50%)}
+  .spec div{padding:8px 10px}
+  .spec div+div{border-left:1px dashed color-mix(in srgb,var(--ink) 30%,transparent)}
+  .spec dt{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .spec dd{font-family:"Saira Condensed";font-weight:700;font-size:17px}
+  .card .btn{justify-content:center;margin-top:auto;width:100%}
+  .btn-outline{border:1px solid var(--ink)}
+  .btn-outline:hover{background:var(--ink);color:var(--card)}
+
+  /* info strip */
+  .strip{background:var(--olive);color:var(--card)}
+  .strip .wrap{display:grid;gap:24px;padding-top:40px;padding-bottom:40px}
+  .strip h3{font-size:22px;margin-bottom:6px;color:var(--brass)}
+  .strip p{font-size:14px;color:color-mix(in srgb,var(--card) 80%,var(--olive))}
+  @media(min-width:800px){.strip .wrap{grid-template-columns:repeat(3,1fr)}}
+  footer{padding:28px 0;font-size:13px;color:var(--muted)}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+
+  /* drawer */
+  .overlay{position:fixed;inset:0;background:color-mix(in srgb,var(--ink) 50%,transparent);opacity:0;pointer-events:none;transition:.25s;z-index:30}
+  .overlay.open{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:var(--card);z-index:31;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column}
+  .drawer.open{transform:none}
+  .drawer-head{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line)}
+  .drawer-head h2{font-size:28px}
+  .icon-btn{width:36px;height:36px;border-radius:8px;display:grid;place-items:center}
+  .icon-btn:hover{background:var(--bg)}
+  .items{flex:1;overflow:auto;padding:12px 20px;display:flex;flex-direction:column;gap:14px}
+  .item{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center}
+  .item img{width:64px;height:64px;border-radius:8px;object-fit:cover}
+  .item-name{font-weight:600;font-size:14px}
+  .qty{display:flex;align-items:center;gap:6px;margin-top:4px}
+  .qty button{width:26px;height:26px;border:1px solid var(--line);border-radius:6px}
+  .empty{color:var(--muted);text-align:center;padding:48px 0}
+  .drawer-foot{padding:20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+  .total{display:flex;justify-content:space-between;align-items:baseline}
+  .total strong{font-family:"Saira Condensed";font-size:28px}
+  .note{font-size:12px;color:var(--muted)}
+
+  /* dialogs */
+  dialog{border:0;border-radius:14px;padding:28px;max-width:440px;width:calc(100% - 32px);background:var(--card);color:var(--ink);margin:auto}
+  dialog::backdrop{background:color-mix(in srgb,var(--ink) 75%,transparent)}
+  dialog h2{font-size:32px;margin-bottom:10px}
+  dialog p{color:var(--muted);margin-bottom:16px;font-size:14px}
+  dialog ul{margin:0 0 20px 18px;font-size:14px;display:flex;flex-direction:column;gap:6px}
+  .dlg-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:var(--ink);color:var(--card);padding:10px 16px;border-radius:8px;font-size:14px;opacity:0;transition:.25s;z-index:40;pointer-events:none}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.card{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<dialog id="ageGate" aria-labelledby="ageTitle">
+  <h2 id="ageTitle">Acesso restrito</h2>
+  <p>Este site comercializa armas brancas e equipamentos de tiro. A navegação é permitida apenas para maiores de 18 anos.</p>
+  <div class="dlg-actions">
+    <button class="btn btn-primary" id="ageYes">Tenho 18 anos ou mais</button>
+    <button class="btn btn-ghost" id="ageNo">Sair</button>
+  </div>
+</dialog>
+
+<dialog id="ctrlDlg" aria-labelledby="ctrlTitle">
+  <h2 id="ctrlTitle">Produto controlado</h2>
+  <p id="ctrlText">A venda deste item exige documentação e é concluída presencialmente na loja.</p>
+  <ul>
+    <li>Registro/autorização de aquisição válido (CR ou SINARM)</li>
+    <li>Documento de identidade e comprovante de residência</li>
+    <li>Laudo de aptidão psicológica e capacidade técnica</li>
+  </ul>
+  <div class="dlg-actions">
+    <button class="btn btn-primary" id="ctrlOk">Solicitar atendimento</button>
+    <button class="btn btn-ghost" id="ctrlClose">Fechar</button>
+  </div>
+</dialog>
+
+<header>
+  <div class="wrap bar">
+    <a href="#" class="logo" style="color:inherit;text-decoration:none" aria-label="Forja Paiol, início">
+      <span class="logo-mark" aria-hidden="true">FP</span>Forja Paiol
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#loja">Canivetes</a>
+      <a href="#loja">Facas</a>
+      <a href="#loja">Tiro esportivo</a>
+      <a href="#info">Documentação</a>
+    </nav>
+    <button class="cart-btn" id="openCart" aria-label="Abrir carrinho">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+      Carrinho <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div>
+      <span class="eyebrow">Cutelaria artesanal & tiro esportivo</span>
+      <h1>Aço que <span>dura</span> gerações</h1>
+      <p>Canivetes, facas campeiras e equipamentos de tiro selecionados por cuteleiros. Envio para todo o Brasil e atendimento especializado para produtos controlados.</p>
+      <div class="hero-cta">
+        <a href="#loja" class="btn btn-primary">Ver catálogo</a>
+        <a href="#info" class="btn btn-ghost">Como comprar armas</a>
+      </div>
+    </div>
+    <div class="hero-img"><img src="./img/hero.png" alt="Bancada de cuteleiro com canivetes de cabo de madeira, faca de caça na bainha de couro e pedra de afiar" /></div>
+  </section>
+
+  <section class="wrap" id="loja" aria-labelledby="shopTitle">
+    <div class="shop-head">
+      <h2 id="shopTitle">Catálogo</h2>
+      <div class="filters" role="group" aria-label="Filtrar por categoria" id="filters"></div>
+    </div>
+    <div class="grid" id="grid" aria-live="polite"></div>
+  </section>
+
+  <section class="strip" id="info" aria-label="Informações de compra">
+    <div class="wrap">
+      <div><h3>Armas brancas</h3><p>Canivetes e facas são enviados com entrega mediante assinatura de maior de idade.</p></div>
+      <div><h3>Pressão & airsoft</h3><p>Carabinas de pressão até 6 mm vendidas online com nota fiscal e garantia de 12 meses.</p></div>
+      <div><h3>Armas de fogo</h3><p>Venda presencial, somente com autorização de aquisição válida. Ajudamos com toda a documentação.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Forja Paiol Cutelaria e Armaria Ltda.</span>
+    <span>Venda proibida para menores de 18 anos.</span>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Carrinho de compras" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>Carrinho</h2>
+    <button class="icon-btn" id="closeCart" aria-label="Fechar carrinho">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="items" id="items"></div>
+  <div class="drawer-foot">
+    <div class="total"><span>Total</span><strong id="total">R$ 0,00</strong></div>
+    <button class="btn btn-primary" id="checkout" style="justify-content:center">Finalizar compra</button>
+    <span class="note">Entrega somente a maiores de 18 anos, mediante apresentação de documento.</span>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const products = [
+  {id:1,name:"Canivete Tropeiro",cat:"Canivetes",price:289.9,img:"canivete-madeira.png",alt:"Canivete dobrável com cabo de nogueira e reforços de latão",badge:"Mais vendido",spec:[["Lâmina","7,5 cm"],["Aço","440C"],["Cabo","Nogueira"]]},
+  {id:2,name:"Canivete Patrulha",cat:"Canivetes",price:349.0,img:"canivete-tatico.png",alt:"Canivete tático com cabo G10 verde-oliva e lâmina stonewash",badge:"Novo",spec:[["Lâmina","8,9 cm"],["Aço","D2"],["Cabo","G10"]]},
+  {id:3,name:"Faca Mateiro",cat:"Facas",price:529.0,img:"faca-caca.png",alt:"Faca de caça com cabo de chifre e bainha de couro marrom",spec:[["Lâmina","12 cm"],["Aço","1095"],["Cabo","Chifre"]]},
+  {id:4,name:"Campeira Pampa",cat:"Facas",price:899.0,img:"faca-campeira.png",alt:"Faca campeira gaúcha com lâmina longa e cabo de prata e chifre gravados",badge:"Artesanal",spec:[["Lâmina","25 cm"],["Aço","5160"],["Cabo","Prata"]]},
+  {id:5,name:"Carabina Coxilha 5.5",cat:"Pressão",price:1490.0,img:"carabina.png",alt:"Carabina de pressão com coronha de nogueira e luneta",spec:[["Calibre","5,5 mm"],["Vel.","290 m/s"],["Peso","3,2 kg"]]},
+  {id:6,name:"Pistola Esportiva .22",cat:"Armas de fogo",price:5890.0,img:"pistola.png",alt:"Pistola semiautomática esportiva preta, vista lateral",controlled:true,badge:"Controlado",spec:[["Calibre",".22 LR"],["Cap.","10 tiros"],["Cano","5,5 pol"]]},
+];
+const cats = ["Todos", ...new Set(products.map(p => p.cat))];
+const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+let filter = "Todos";
+const cart = new Map();
+
+const $ = id => document.getElementById(id);
+
+function renderFilters(){
+  $("filters").innerHTML = cats.map(c =>
+    `<button class="chip" aria-pressed="${c===filter}" data-cat="${c}">${c}</button>`).join("");
+}
+function renderGrid(){
+  const list = products.filter(p => filter==="Todos" || p.cat===filter);
+  $("grid").innerHTML = list.map((p,i) => `
+    <article class="card" style="animation-delay:${i*70}ms">
+      <div class="card-img">
+        <img src="./img/${p.img}" alt="${p.alt}" loading="lazy" />
+        ${p.badge ? `<span class="badge ${p.controlled?'ctrl':''}">${p.badge}</span>` : ""}
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <div><h3>${p.name}</h3><div class="cat">${p.cat}</div></div>
+          <div class="price">${brl(p.price)}</div>
+        </div>
+        <dl class="spec">${p.spec.map(([k,v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+        ${p.controlled
+          ? `<button class="btn btn-outline" data-ctrl="${p.id}">Comprar com documentação</button>`
+          : `<button class="btn btn-primary" data-add="${p.id}">Adicionar ao carrinho</button>`}
+      </div>
+    </article>`).join("");
+}
+function renderCart(){
+  let count = 0, total = 0;
+  const rows = [...cart.entries()].map(([id,q]) => {
+    const p = products.find(x => x.id===id);
+    count += q; total += q*p.price;
+    return `<div class="item">
+      <img src="./img/${p.img}" alt="" />
+      <div><div class="item-name">${p.name}</div>
+        <div class="qty">
+          <button data-dec="${id}" aria-label="Diminuir quantidade de ${p.name}">−</button>
+          <span aria-label="Quantidade">${q}</span>
+          <button data-inc="${id}" aria-label="Aumentar quantidade de ${p.name}">+</button>
+        </div></div>
+      <strong>${brl(q*p.price)}</strong>
+    </div>`;
+  });
+  $("items").innerHTML = rows.length ? rows.join("") : `<p class="empty">Seu carrinho está vazio.</p>`;
+  $("cartCount").textContent = count;
+  $("total").textContent = brl(total);
+}
+function toast(msg){
+  const t = $("toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("show"), 1800);
+}
+function setCart(open){
+  $("drawer").classList.toggle("open",open);
+  $("overlay").classList.toggle("open",open);
+  $("drawer").setAttribute("aria-hidden",!open);
+  if(open) $("closeCart").focus();
+}
+
+document.addEventListener("click", e => {
+  const t = e.target.closest("button"); if(!t) return;
+  if(t.dataset.cat){ filter = t.dataset.cat; renderFilters(); renderGrid(); }
+  if(t.dataset.add){ const id=+t.dataset.add; cart.set(id,(cart.get(id)||0)+1); renderCart(); toast("Adicionado ao carrinho"); }
+  if(t.dataset.inc){ const id=+t.dataset.inc; cart.set(id,Math.min(cart.get(id)+1,5)); renderCart(); }
+  if(t.dataset.dec){ const id=+t.dataset.dec; const q=cart.get(id)-1; q>0?cart.set(id,q):cart.delete(id); renderCart(); }
+  if(t.dataset.ctrl){ const p=products.find(x=>x.id===+t.dataset.ctrl); $("ctrlText").textContent=`A venda de "${p.name}" exige documentação e é concluída presencialmente na loja.`; $("ctrlDlg").showModal(); }
+});
+$("openCart").onclick = () => setCart(true);
+$("closeCart").onclick = () => setCart(false);
+$("overlay").onclick = () => setCart(false);
+document.addEventListener("keydown", e => { if(e.key==="Escape") setCart(false); });
+$("checkout").onclick = () => cart.size ? toast("Demonstração: checkout não conectado") : toast("Adicione itens ao carrinho");
+$("ctrlClose").onclick = () => $("ctrlDlg").close();
+$("ctrlOk").onclick = () => { $("ctrlDlg").close(); toast("Um especialista entrará em contato"); };
+
+const gate = $("ageGate");
+gate.addEventListener("cancel", e => e.preventDefault());
+$("ageYes").onclick = () => gate.close();
+$("ageNo").onclick = () => { gate.querySelector("p").textContent = "Acesso não permitido para menores de 18 anos."; $("ageYes").remove(); $("ageNo").remove(); };
+gate.showModal();
+
+renderFilters(); renderGrid(); renderCart();
+</script>
+</body>
+</html>

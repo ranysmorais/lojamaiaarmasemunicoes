@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title">
+  <title id="title">MAIA Armas e Munições</title>
+  <circle cx="100" cy="100" r="96" fill="#0c1013" stroke="#30363c" stroke-width="4"/>
+  <circle cx="100" cy="100" r="78" fill="none" stroke="#f4f4f4" stroke-width="16"/>
+  <circle cx="100" cy="100" r="50" fill="none" stroke="#f52030" stroke-width="16"/>
+  <path d="M100 9v182M9 100h182" stroke="#0c1013" stroke-width="15"/>
+  <path d="M24 77h152v60H24z" fill="#0c1013"/>
+  <text x="104" y="111" fill="#fff" text-anchor="middle" font-family="Arial,sans-serif" font-size="35" letter-spacing="9">MAIA</text>
+  <text x="100" y="129" fill="#fff" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" letter-spacing="1.8">ARMAS E MUNIÇÕES</text>
+</svg>
